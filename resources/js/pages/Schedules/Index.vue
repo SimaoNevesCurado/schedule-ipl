@@ -85,12 +85,12 @@ const dayNames: Record<number, string> = {
 const classTypeOrder = ['T', 'TP', 'PL'];
 
 const colorPalette = [
-    'from-sky-100 to-sky-50 border-sky-300 text-sky-900',
-    'from-violet-100 to-violet-50 border-violet-300 text-violet-900',
-    'from-emerald-100 to-emerald-50 border-emerald-300 text-emerald-900',
-    'from-amber-100 to-amber-50 border-amber-300 text-amber-900',
-    'from-pink-100 to-pink-50 border-pink-300 text-pink-900',
-    'from-blue-100 to-blue-50 border-blue-300 text-blue-900',
+    'from-sky-900/70 to-sky-800/60 border-sky-500/60 text-sky-100',
+    'from-violet-900/70 to-violet-800/60 border-violet-500/60 text-violet-100',
+    'from-emerald-900/70 to-emerald-800/60 border-emerald-500/60 text-emerald-100',
+    'from-amber-900/70 to-amber-800/60 border-amber-500/60 text-amber-100',
+    'from-pink-900/70 to-pink-800/60 border-pink-500/60 text-pink-100',
+    'from-blue-900/70 to-blue-800/60 border-blue-500/60 text-blue-100',
 ];
 
 function hashUnit(unit: string): number {
@@ -449,21 +449,21 @@ function applyScheduleToBuilder(schedule: Schedule): void {
 <template>
     <Head title="Schedule Builder" />
 
-    <main class="min-h-screen bg-slate-50 px-4 py-8 text-slate-900 sm:px-6 lg:px-8">
+    <main class="min-h-screen bg-slate-950 px-4 py-8 text-slate-100 sm:px-6 lg:px-8">
         <div class="mx-auto flex w-full max-w-7xl flex-col gap-6">
-            <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <section class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <div>
                         <h1 class="text-2xl font-semibold">Escolhe turnos e monta o teu horário</h1>
-                        <p class="mt-1 text-sm text-slate-600">Seleciona T/TP/PL por UC, vê conflitos no calendário e exporta resultados.</p>
+                        <p class="mt-1 text-sm text-slate-300">Seleciona T/TP/PL por UC, vê conflitos no calendário e exporta resultados.</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <a href="/turns/export" class="rounded-lg border border-blue-300 bg-blue-50 px-3 py-2 text-xs font-medium text-blue-800 hover:bg-blue-100">
+                        <a href="/turns/export" class="rounded-lg border border-blue-500/40 bg-blue-500/10 px-3 py-2 text-xs font-medium text-blue-200 hover:bg-blue-500/20">
                             Exportar por texto
                         </a>
                         <button
                             type="button"
-                            class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                            class="rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-200 hover:bg-slate-800"
                             @click="clearAllSelections"
                         >
                             Limpar escolhas
@@ -472,37 +472,37 @@ function applyScheduleToBuilder(schedule: Schedule): void {
                 </div>
             </section>
 
-            <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <section class="rounded-2xl border border-slate-800 bg-slate-900 p-4 shadow-sm">
                 <div class="flex flex-wrap items-center gap-2">
                     <span
                         v-for="tag in selectedTags"
                         :key="`${tag.unit}-${tag.classType}-${tag.code}`"
                         class="rounded-full border px-3 py-1 text-xs"
-                        :class="tag.mandatory ? 'border-emerald-300 bg-emerald-50 text-emerald-800' : 'border-sky-300 bg-sky-50 text-sky-800'"
+                        :class="tag.mandatory ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-300' : 'border-sky-500/50 bg-sky-500/10 text-sky-200'"
                     >
                         {{ tag.unit }} {{ tag.classType }} {{ tag.code }}
                     </span>
-                    <span v-if="selectedTags.length === 0" class="text-xs text-slate-500">Ainda sem escolhas. Usa os botões por tipo para começar.</span>
+                    <span v-if="selectedTags.length === 0" class="text-xs text-slate-400">Ainda sem escolhas. Usa os botões por tipo para começar.</span>
                 </div>
             </section>
 
-            <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <section class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
                 <h1 class="text-xl font-semibold">Escolher horários por tipo (PL, TP, T)</h1>
-                <p class="mt-1 text-sm text-slate-600">Cada grupo de tipo pode ter uma ou mais escolhas. Eventos obrigatórios entram automaticamente.</p>
-                <p v-if="meta.uploadedFileName" class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-700">
+                <p class="mt-1 text-sm text-slate-300">Cada grupo de tipo pode ter uma ou mais escolhas. Eventos obrigatórios entram automaticamente.</p>
+                <p v-if="meta.uploadedFileName" class="mt-3 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-300">
                     Horário carregado a partir do texto: {{ meta.uploadedFileName }}
                 </p>
 
                 <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                    <article v-for="unit in unitChoices" :key="unit.name" class="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                    <article v-for="unit in unitChoices" :key="unit.name" class="rounded-xl border border-slate-700 bg-slate-800 p-3">
                         <div class="flex items-center justify-between gap-2">
                             <h2 class="text-sm font-semibold">{{ unit.name }}</h2>
-                            <span v-if="unit.mandatoryEvents.length > 0" class="rounded-full border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[11px] text-emerald-700">OBR</span>
+                            <span v-if="unit.mandatoryEvents.length > 0" class="rounded-full border border-emerald-500/50 bg-emerald-500/10 px-2 py-0.5 text-[11px] text-emerald-300">OBR</span>
                         </div>
 
                         <div class="mt-3 flex flex-col gap-3">
-                            <div v-for="group in unit.choiceGroups" :key="`${unit.name}-${group.classType}`" class="rounded-lg border border-slate-200 bg-white p-2">
-                                <div class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500">{{ group.classType }}</div>
+                            <div v-for="group in unit.choiceGroups" :key="`${unit.name}-${group.classType}`" class="rounded-lg border border-slate-700 bg-slate-900 p-2">
+                                <div class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">{{ group.classType }}</div>
                                 <div class="flex flex-wrap gap-2">
                                     <button
                                         v-for="option in group.options"
@@ -510,11 +510,11 @@ function applyScheduleToBuilder(schedule: Schedule): void {
                                         type="button"
                                         @click="toggleOption(unit.name, group.classType, option.code)"
                                         class="rounded-full border px-3 py-1 text-xs transition"
-                                        :class="isOptionSelected(unit.name, group.classType, option.code) ? 'border-sky-400 bg-sky-100 text-sky-900' : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'"
+                                        :class="isOptionSelected(unit.name, group.classType, option.code) ? 'border-sky-400 bg-sky-500/20 text-sky-100' : 'border-slate-600 bg-slate-800 text-slate-200 hover:border-slate-400'"
                                     >
                                         {{ option.code }}
                                     </button>
-                                    <span v-if="group.options.length === 0" class="text-xs text-slate-500">Sem opcoes.</span>
+                                    <span v-if="group.options.length === 0" class="text-xs text-slate-400">Sem opcoes.</span>
                                 </div>
                             </div>
                         </div>
@@ -522,25 +522,25 @@ function applyScheduleToBuilder(schedule: Schedule): void {
                 </div>
             </section>
 
-            <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <section class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
                 <h2 class="text-xl font-semibold">Calendario semanal</h2>
 
-                <p v-if="collisionSignatures.size > 0" class="mt-3 rounded-lg border border-rose-300 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+                <p v-if="collisionSignatures.size > 0" class="mt-3 rounded-lg border border-rose-500/50 bg-rose-500/10 px-3 py-2 text-sm text-rose-200">
                     Existem sobreposicoes entre turnos selecionados.
                 </p>
 
-                <div class="mt-4 overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                <div class="mt-4 overflow-x-auto rounded-xl border border-slate-700 bg-slate-950">
                     <div class="min-w-[820px]">
-                        <div class="grid border-b border-slate-200" :style="`grid-template-columns: 88px repeat(${daysToShow.length}, minmax(0, 1fr));`">
-                            <div class="border-r border-slate-200 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Hora</div>
-                            <div v-for="day in daysToShow" :key="`head-${day}`" class="border-r border-slate-200 px-3 py-2 text-center text-xs font-semibold uppercase tracking-wide text-slate-700 last:border-r-0">
+                        <div class="grid border-b border-slate-700" :style="`grid-template-columns: 88px repeat(${daysToShow.length}, minmax(0, 1fr));`">
+                            <div class="border-r border-slate-700 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Hora</div>
+                            <div v-for="day in daysToShow" :key="`head-${day}`" class="border-r border-slate-700 px-3 py-2 text-center text-xs font-semibold uppercase tracking-wide text-slate-200 last:border-r-0">
                                 {{ dayNames[day] }}
                             </div>
                         </div>
 
                         <div class="grid" :style="`grid-template-columns: 88px repeat(${daysToShow.length}, minmax(0, 1fr));`">
-                            <div class="border-r border-slate-200">
-                                <div v-for="hour in timelineHours" :key="`hour-${hour}`" class="h-16 border-b border-slate-200 px-3 py-2 text-xs text-slate-500">
+                            <div class="border-r border-slate-700">
+                                <div v-for="hour in timelineHours" :key="`hour-${hour}`" class="h-16 border-b border-slate-700 px-3 py-2 text-xs text-slate-400">
                                     {{ hourLabel(hour) }}
                                 </div>
                             </div>
@@ -548,13 +548,13 @@ function applyScheduleToBuilder(schedule: Schedule): void {
                             <div
                                 v-for="day in daysToShow"
                                 :key="`col-${day}`"
-                                class="relative border-r border-slate-200 last:border-r-0"
+                                class="relative border-r border-slate-700 last:border-r-0"
                                 :style="`height: ${Math.max(1, timelineHours.length - 1) * 64}px;`"
                             >
                                 <div
                                     v-for="hour in timelineHours.slice(0, -1)"
                                     :key="`line-${day}-${hour}`"
-                                    class="h-16 border-b border-slate-200"
+                                    class="h-16 border-b border-slate-700"
                                 />
 
                                 <div
@@ -579,13 +579,13 @@ function applyScheduleToBuilder(schedule: Schedule): void {
                 </div>
             </section>
 
-            <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <section class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
                 <h2 class="text-lg font-semibold">Horários já feitos</h2>
                 <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                    <input v-model="filters.search" type="text" placeholder="Pesquisar combinacao" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm" />
-                    <input v-model.number="filters.maxDays" type="number" min="1" max="6" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm" />
-                    <input v-model.number="filters.maxGaps" type="number" min="0" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm" />
-                    <select v-model="filters.sortBy" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm">
+                    <input v-model="filters.search" type="text" placeholder="Pesquisar combinacao" class="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400" />
+                    <input v-model.number="filters.maxDays" type="number" min="1" max="6" class="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100" />
+                    <input v-model.number="filters.maxGaps" type="number" min="0" class="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100" />
+                    <select v-model="filters.sortBy" class="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100">
                         <option value="score">Ordenar por score</option>
                         <option value="days">Menos dias</option>
                         <option value="gaps">Menos buracos</option>
@@ -594,19 +594,19 @@ function applyScheduleToBuilder(schedule: Schedule): void {
                 </div>
 
                 <div class="mt-4 flex flex-col gap-2">
-                    <details v-for="schedule in filteredSchedules.slice(0, 20)" :key="schedule.key" class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                    <details v-for="schedule in filteredSchedules.slice(0, 20)" :key="schedule.key" class="rounded-lg border border-slate-700 bg-slate-950 p-3">
                         <summary class="cursor-pointer list-none">
                             <div class="flex flex-wrap items-center justify-between gap-2 text-sm">
                                 <strong>{{ schedule.key }}</strong>
-                                <span class="text-slate-600">Score {{ schedule.metrics.score }} | Dias {{ schedule.metrics.daysCount }} | Buracos {{ schedule.metrics.gaps }}m</span>
+                                <span class="text-slate-300">Score {{ schedule.metrics.score }} | Dias {{ schedule.metrics.daysCount }} | Buracos {{ schedule.metrics.gaps }}m</span>
                             </div>
                         </summary>
-                        <div class="mt-3 flex flex-col gap-3 border-t border-slate-200 pt-3">
+                        <div class="mt-3 flex flex-col gap-3 border-t border-slate-700 pt-3">
                             <div class="flex flex-wrap gap-2">
                                 <span
                                     v-for="event in schedule.events"
                                     :key="`${schedule.key}-${event.unit}-${event.classType}-${event.optionCode}-${event.day}-${event.start}`"
-                                    class="rounded-full border border-slate-300 bg-white px-2 py-1 text-[11px] text-slate-700"
+                                    class="rounded-full border border-slate-600 bg-slate-800 px-2 py-1 text-[11px] text-slate-200"
                                 >
                                     {{ event.unit }} {{ normalizeClassType(event.classType) }} {{ event.optionCode }} · {{ event.day }} {{ event.start }}-{{ event.end }}
                                 </span>
@@ -614,7 +614,7 @@ function applyScheduleToBuilder(schedule: Schedule): void {
                             <div>
                                 <button
                                     type="button"
-                                    class="rounded-lg border border-blue-300 bg-blue-50 px-3 py-2 text-xs font-medium text-blue-800 hover:bg-blue-100"
+                                    class="rounded-lg border border-blue-500/40 bg-blue-500/10 px-3 py-2 text-xs font-medium text-blue-200 hover:bg-blue-500/20"
                                     @click="applyScheduleToBuilder(schedule)"
                                 >
                                     Aplicar este horário no construtor
